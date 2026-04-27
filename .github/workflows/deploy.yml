@@ -73,11 +73,6 @@ jobs:
             -e "s|image: '/images/|image: 'images/|g" \
             -e "s|src=\"/images/|src=\"images/|g" \
             public/js/products.js public/js/app.js
-          # Add lazy loading to all img tags that are not the hero
-          sed -i \
-            -e 's|<img src="images/DSC|<img loading="lazy" src="images/DSC|g' \
-            -e 's|<img src="images/colab|<img loading="lazy" src="images/colab|g' \
-            public/index.html public/colabs.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
