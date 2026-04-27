@@ -24,19 +24,44 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Generate favicon PNG from logo
+      - name: Compress images and generate favicon
         run: |
           pip install Pillow -q
           python3 << 'PYEOF'
+          import os
           from PIL import Image
-          img = Image.open('public/images/logocdp.jpg').convert('RGBA')
-          img = img.resize((128, 128), Image.LANCZOS)
-          img.save('public/favicon.png', 'PNG')
-          print('favicon.png generated')
+
+          image_dir = 'public/images'
+          MAX_PX = 1400
+          QUALITY = 78
+
+          for fname in os.listdir(image_dir):
+              fpath = os.path.join(image_dir, fname)
+              ext = fname.lower().split('.')[-1]
+
+              if ext in ('jpg', 'jpeg'):
+                  with Image.open(fpath) as img:
+                      orig = os.path.getsize(fpath)
+                      if img.width > MAX_PX or img.height > MAX_PX:
+                          img.thumbnail((MAX_PX, MAX_PX), Image.LANCZOS)
+                      img.save(fpath, 'JPEG', quality=QUALITY, optimize=True)
+                      new = os.path.getsize(fpath)
+                      print(f'{fname}: {orig//1024}KB -> {new//1024}KB')
+
+              elif ext == 'png':
+                  with Image.open(fpath) as img:
+                      img.save(fpath, 'PNG', optimize=True)
+
+          # Generate favicon
+          with Image.open('public/images/logocdp.jpg') as img:
+              img = img.resize((128, 128), Image.LANCZOS)
+              img.save('public/favicon.png', 'PNG')
+              print('favicon.png generated')
           PYEOF
 
-      - name: Fix asset paths for GitHub Pages
+      - name: Fix asset paths and add lazy loading
         run: |
+          # Fix absolute paths in HTML and JS files
           sed -i \
             -e 's|href="/css/|href="css/|g' \
             -e 's|href="/images/|href="images/|g' \
@@ -44,7 +69,15 @@ jobs:
             -e 's|src="/js/|src="js/|g' \
             -e 's|src="/images/|src="images/|g' \
             public/index.html public/colabs.html
-          sed -i "s|image: '/images/|image: 'images/|g" public/js/products.js
+          sed -i \
+            -e "s|image: '/images/|image: 'images/|g" \
+            -e "s|src=\"/images/|src=\"images/|g" \
+            public/js/products.js public/js/app.js
+          # Add lazy loading to all img tags that are not the hero
+          sed -i \
+            -e 's|<img src="images/DSC|<img loading="lazy" src="images/DSC|g' \
+            -e 's|<img src="images/colab|<img loading="lazy" src="images/colab|g' \
+            public/index.html public/colabs.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

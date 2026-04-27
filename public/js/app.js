@@ -52,7 +52,7 @@ async function loadProductsScroll() {
   let products = [];
   try {
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 3000);
+    const timeout = setTimeout(() => controller.abort(), 800);
     const res = await fetch('/api/products', { signal: controller.signal });
     clearTimeout(timeout);
     const data = await res.json();
