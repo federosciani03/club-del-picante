@@ -28,6 +28,7 @@ jobs:
         run: |
           sed -i \
             -e 's|href="/css/|href="css/|g' \
+            -e 's|href="/images/|href="images/|g' \
             -e 's|src="/js/|src="js/|g' \
             -e 's|src="/images/|src="images/|g' \
             public/index.html public/colabs.html
