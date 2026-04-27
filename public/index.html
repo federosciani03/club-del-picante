@@ -108,91 +108,51 @@
     }
     .colab-ig-card:hover .colab-ig-tag { background: var(--orange); border-color: var(--orange); }
 
-    /* ---- GALERÍA MOSAIC GRID (desktop only) ---- */
+    /* ---- GALERÍA GRID ---- */
     .gallery-scroll-section { padding: 80px 0; background: var(--black); border-top: 1px solid var(--black-border); }
     .gallery-scroll-section .inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
-    @media(max-width:639px) { .gallery-mosaic { display: none; } }
-    .gallery-mosaic {
+    .gallery-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-template-rows: 240px 240px 220px;
-      gap: 10px;
-      margin-top: 40px;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 32px;
     }
-    .gm-item {
-      border-radius: var(--radius); overflow: hidden;
-      background: var(--black-card); border: 1px solid var(--black-border);
-      cursor: pointer; transition: var(--transition);
-    }
-    .gm-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
-    .gm-item:hover { border-color: var(--orange); box-shadow: 0 8px 30px rgba(244,121,32,0.15); }
-    .gm-item:hover img { transform: scale(1.05); }
-    .gm-1 { grid-column: 1; grid-row: 1 / 3; }
-    .gm-2 { grid-column: 2; grid-row: 1; }
-    .gm-3 { grid-column: 3; grid-row: 1; }
-    .gm-4 { grid-column: 4; grid-row: 1 / 3; }
-    .gm-5 { grid-column: 2 / 4; grid-row: 2; }
-    .gm-6 { grid-column: 1 / 3; grid-row: 3; }
-    .gm-7 { grid-column: 3 / 5; grid-row: 3; }
-
-    /* ---- GALERÍA MOBILE CAROUSEL ---- */
-    .gallery-mobile-carousel { margin-top: 32px; }
-    @media(min-width:640px) { .gallery-mobile-carousel { display: none; } }
-    .gallery-snap-track {
-      display: flex;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      gap: 12px;
-      padding: 0 24px 8px;
-      scrollbar-width: none;
-      margin: 0 -24px;
-    }
-    .gallery-snap-track::-webkit-scrollbar { display: none; }
-    .gallery-snap-card {
-      flex: 0 0 78%;
-      scroll-snap-align: start;
-      border-radius: 20px;
-      overflow: hidden;
-      aspect-ratio: 4/5;
-      position: relative;
-      cursor: pointer;
-      background: var(--black-card);
-      border: 1px solid var(--black-border);
-      -webkit-tap-highlight-color: transparent;
-      transition: border-color 0.2s;
-    }
-    .gallery-snap-card:active { border-color: var(--orange); }
-    .gallery-snap-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .gallery-snap-card::after {
-      content: '';
-      position: absolute; top: 0; right: 0; bottom: 0; left: 0;
-      background: linear-gradient(to bottom, transparent 55%, rgba(0,0,0,0.45) 100%);
+    .gi { border-radius: 16px; overflow: hidden; position: relative; cursor: pointer; background: var(--black-card); }
+    .gi img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
+    .gi:active img { transform: scale(1.03); }
+    .gi::after {
+      content: ''; position: absolute; top: 0; right: 0; bottom: 0; left: 0;
+      background: rgba(0,0,0,0); transition: background 0.3s;
       pointer-events: none;
     }
-    .gallery-snap-expand {
-      position: absolute; bottom: 14px; right: 14px;
-      background: rgba(0,0,0,0.5);
-      -webkit-backdrop-filter: blur(8px);
-      backdrop-filter: blur(8px);
-      border-radius: 50%;
-      width: 38px; height: 38px;
-      display: flex; align-items: center; justify-content: center;
-      border: 1px solid rgba(255,255,255,0.18);
-      pointer-events: none; z-index: 2;
+    .gi:active::after { background: rgba(244,121,32,0.12); }
+    /* Mobile layout: wide → 2col → wide → 2col → wide */
+    .gi-1 { grid-column: 1 / 3; aspect-ratio: 16/9; }
+    .gi-2 { aspect-ratio: 1; }
+    .gi-3 { aspect-ratio: 1; }
+    .gi-4 { grid-column: 1 / 3; aspect-ratio: 16/9; }
+    .gi-5 { aspect-ratio: 1; }
+    .gi-6 { aspect-ratio: 1; }
+    .gi-7 { grid-column: 1 / 3; aspect-ratio: 16/9; }
+    /* Desktop: 4-col asymmetric mosaic */
+    @media(min-width:640px) {
+      .gallery-grid {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: 240px 240px 220px;
+        gap: 10px;
+      }
+      .gi { border-radius: var(--radius); }
+      .gi:active img { transform: none; }
+      .gi:hover img { transform: scale(1.05); }
+      .gi:hover { box-shadow: 0 8px 30px rgba(244,121,32,0.15); }
+      .gi-1 { grid-column: 1; grid-row: 1 / 3; aspect-ratio: unset; }
+      .gi-2 { grid-column: 2; grid-row: 1; aspect-ratio: unset; }
+      .gi-3 { grid-column: 3; grid-row: 1; aspect-ratio: unset; }
+      .gi-4 { grid-column: 4; grid-row: 1 / 3; aspect-ratio: unset; }
+      .gi-5 { grid-column: 2 / 4; grid-row: 2; aspect-ratio: unset; }
+      .gi-6 { grid-column: 1 / 3; grid-row: 3; aspect-ratio: unset; }
+      .gi-7 { grid-column: 3 / 5; grid-row: 3; aspect-ratio: unset; }
     }
-    .gallery-snap-expand svg { width: 16px; height: 16px; fill: white; }
-    .gallery-dots {
-      display: flex; justify-content: center; gap: 6px;
-      margin-top: 18px;
-    }
-    .gallery-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--black-border);
-      border: none; padding: 0; cursor: pointer;
-      transition: all 0.25s;
-    }
-    .gallery-dot.active { background: var(--orange); width: 20px; border-radius: 3px; }
     .gallery-lightbox {
       position: fixed; inset: 0; z-index: 500;
       background: rgba(0,0,0,0.95);
@@ -577,70 +537,26 @@
         <p class="s-eyebrow">En acción</p>
         <h2 class="s-title">LA <span>GALERÍA</span></h2>
         <p class="s-subtitle">Burgers, pizzas, sushi — el Hot Honey en todos lados.</p>
-        <!-- Mobile: snap carousel -->
-        <div class="gallery-mobile-carousel">
-          <div class="gallery-snap-track" id="galleryTrack">
-            <div class="gallery-snap-card" onclick="openLightbox('/images/DSC00550.jpg')">
-              <img src="/images/DSC00550.jpg" alt="Hot Honey + Hamburguesa" loading="lazy"/>
-              <div class="gallery-snap-expand"><svg viewBox="0 0 24 24"><path d="M15 3h6v6h-2V5h-4V3zM3 15H1v6h6v-2H3v-4zM21 15h-2v4h-4v2h6v-6zM5 3H3v4H1V3h6v2H5z"/></svg></div>
-            </div>
-            <div class="gallery-snap-card" onclick="openLightbox('/images/DSC00423.jpg')">
-              <img src="/images/DSC00423.jpg" alt="Chef aplicando Hot Honey" loading="lazy"/>
-              <div class="gallery-snap-expand"><svg viewBox="0 0 24 24"><path d="M15 3h6v6h-2V5h-4V3zM3 15H1v6h6v-2H3v-4zM21 15h-2v4h-4v2h6v-6zM5 3H3v4H1V3h6v2H5z"/></svg></div>
-            </div>
-            <div class="gallery-snap-card" onclick="openLightbox('/images/DSC00583.jpg')">
-              <img src="/images/DSC00583.jpg" alt="Hamburguesa con Hot Honey close-up" loading="lazy"/>
-              <div class="gallery-snap-expand"><svg viewBox="0 0 24 24"><path d="M15 3h6v6h-2V5h-4V3zM3 15H1v6h6v-2H3v-4zM21 15h-2v4h-4v2h6v-6zM5 3H3v4H1V3h6v2H5z"/></svg></div>
-            </div>
-            <div class="gallery-snap-card" onclick="openLightbox('/images/colab-angus.jpg')">
-              <img src="/images/colab-angus.jpg" alt="Colab Angus Brother" loading="lazy"/>
-              <div class="gallery-snap-expand"><svg viewBox="0 0 24 24"><path d="M15 3h6v6h-2V5h-4V3zM3 15H1v6h6v-2H3v-4zM21 15h-2v4h-4v2h6v-6zM5 3H3v4H1V3h6v2H5z"/></svg></div>
-            </div>
-            <div class="gallery-snap-card" onclick="openLightbox('/images/DSC00581.jpg')">
-              <img src="/images/DSC00581.jpg" alt="Mesa con hamburguesas y Hot Honey" loading="lazy"/>
-              <div class="gallery-snap-expand"><svg viewBox="0 0 24 24"><path d="M15 3h6v6h-2V5h-4V3zM3 15H1v6h6v-2H3v-4zM21 15h-2v4h-4v2h6v-6zM5 3H3v4H1V3h6v2H5z"/></svg></div>
-            </div>
-            <div class="gallery-snap-card" onclick="openLightbox('/images/colab-sandwich.jpg')">
-              <img src="/images/colab-sandwich.jpg" alt="The Soprano Sandwich — Tarascón" loading="lazy"/>
-              <div class="gallery-snap-expand"><svg viewBox="0 0 24 24"><path d="M15 3h6v6h-2V5h-4V3zM3 15H1v6h6v-2H3v-4zM21 15h-2v4h-4v2h6v-6zM5 3H3v4H1V3h6v2H5z"/></svg></div>
-            </div>
-            <div class="gallery-snap-card" onclick="openLightbox('/images/colab-pizza.jpg')">
-              <img src="/images/colab-pizza.jpg" alt="Sweet Spicy Pepperoni — Tarascón" loading="lazy"/>
-              <div class="gallery-snap-expand"><svg viewBox="0 0 24 24"><path d="M15 3h6v6h-2V5h-4V3zM3 15H1v6h6v-2H3v-4zM21 15h-2v4h-4v2h6v-6zM5 3H3v4H1V3h6v2H5z"/></svg></div>
-            </div>
-          </div>
-          <div class="gallery-dots" id="galleryDots">
-            <button class="gallery-dot active" onclick="gallerySnapTo(0)"></button>
-            <button class="gallery-dot" onclick="gallerySnapTo(1)"></button>
-            <button class="gallery-dot" onclick="gallerySnapTo(2)"></button>
-            <button class="gallery-dot" onclick="gallerySnapTo(3)"></button>
-            <button class="gallery-dot" onclick="gallerySnapTo(4)"></button>
-            <button class="gallery-dot" onclick="gallerySnapTo(5)"></button>
-            <button class="gallery-dot" onclick="gallerySnapTo(6)"></button>
-          </div>
-        </div>
-
-        <!-- Desktop: mosaic grid -->
-        <div class="gallery-mosaic">
-          <div class="gm-item gm-1" onclick="openLightbox('/images/DSC00550.jpg')">
+        <div class="gallery-grid">
+          <div class="gi gi-1" onclick="openLightbox('/images/DSC00550.jpg')">
             <img src="/images/DSC00550.jpg" alt="Hot Honey + Hamburguesa" loading="lazy"/>
           </div>
-          <div class="gm-item gm-2" onclick="openLightbox('/images/DSC00423.jpg')">
+          <div class="gi gi-2" onclick="openLightbox('/images/DSC00423.jpg')">
             <img src="/images/DSC00423.jpg" alt="Chef aplicando Hot Honey" loading="lazy"/>
           </div>
-          <div class="gm-item gm-3" onclick="openLightbox('/images/DSC00583.jpg')">
+          <div class="gi gi-3" onclick="openLightbox('/images/DSC00583.jpg')">
             <img src="/images/DSC00583.jpg" alt="Hamburguesa con Hot Honey close-up" loading="lazy"/>
           </div>
-          <div class="gm-item gm-4" onclick="openLightbox('/images/colab-angus.jpg')">
+          <div class="gi gi-4" onclick="openLightbox('/images/colab-angus.jpg')">
             <img src="/images/colab-angus.jpg" alt="Colab Angus Brother" loading="lazy"/>
           </div>
-          <div class="gm-item gm-5" onclick="openLightbox('/images/DSC00581.jpg')">
+          <div class="gi gi-5" onclick="openLightbox('/images/DSC00581.jpg')">
             <img src="/images/DSC00581.jpg" alt="Mesa con hamburguesas y Hot Honey" loading="lazy"/>
           </div>
-          <div class="gm-item gm-6" onclick="openLightbox('/images/colab-sandwich.jpg')">
+          <div class="gi gi-6" onclick="openLightbox('/images/colab-sandwich.jpg')">
             <img src="/images/colab-sandwich.jpg" alt="The Soprano Sandwich — Tarascón" loading="lazy"/>
           </div>
-          <div class="gm-item gm-7" onclick="openLightbox('/images/colab-pizza.jpg')">
+          <div class="gi gi-7" onclick="openLightbox('/images/colab-pizza.jpg')">
             <img src="/images/colab-pizza.jpg" alt="Sweet Spicy Pepperoni — Tarascón" loading="lazy"/>
           </div>
         </div>
