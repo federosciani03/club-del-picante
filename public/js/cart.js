@@ -11,7 +11,7 @@ const Cart = (() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       items = saved ? JSON.parse(saved) : [];
-    } catch { items = []; }
+    } catch(e) { items = []; }
   };
 
   const save = () => {

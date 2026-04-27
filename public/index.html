@@ -19,8 +19,8 @@
     body { overflow-x: hidden; }
     .page { display: block !important; min-height: unset; padding-top: 0; }
     #app { padding-top: 64px; }
-    /* Hero has all position:absolute children so needs explicit height */
-    #hero { min-height: 100vh; min-height: 100svh; }
+    /* Hero: explicit height so position:absolute children are visible */
+    #hero { min-height: calc(100vh - 64px); min-height: calc(100svh - 64px); }
 
     /* ---- OUT NOW TICKER ---- */
     .outnow-ticker {
@@ -398,12 +398,12 @@
 
       <!-- Foto full bleed -->
       <img src="/images/DSC00423.jpg" alt="Hot Honey Club del Picante" fetchpriority="high" loading="eager"
-        style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 25%;z-index:0;"/>
+        style="position:absolute;top:0;right:0;bottom:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center 25%;z-index:0;"/>
 
       <!-- Overlay: claro arriba, negro sólido abajo -->
-      <div style="position:absolute;inset:0;z-index:1;background:linear-gradient(to bottom,rgba(10,10,10,0.1) 0%,rgba(10,10,10,0) 30%,rgba(10,10,10,0.7) 60%,rgba(10,10,10,1) 100%);"></div>
+      <div style="position:absolute;top:0;right:0;bottom:0;left:0;z-index:1;background:linear-gradient(to bottom,rgba(10,10,10,0.1) 0%,rgba(10,10,10,0) 30%,rgba(10,10,10,0.7) 60%,rgba(10,10,10,1) 100%);"></div>
 
-      <div id="particles" style="position:absolute;inset:0;pointer-events:none;z-index:2;"></div>
+      <div id="particles" style="position:absolute;top:0;right:0;bottom:0;left:0;pointer-events:none;z-index:2;"></div>
 
       <!-- Contenido anclado al fondo -->
       <div style="position:absolute;bottom:0;left:0;right:0;z-index:3;padding:0 24px 32px;">

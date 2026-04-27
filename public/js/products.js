@@ -69,7 +69,7 @@ const Products = (() => {
       const res = await fetch('/api/products');
       allProducts = await res.json();
       return allProducts;
-    } catch {
+    } catch(e) {
       allProducts = [
         { id: 'miel-picante-chica', name: 'Miel Picante Fuego Lento', size: 'Frasco Chico', weight: '150g', price: 2800, stock: 25, spiceLevel: 2, description: 'La entrada perfecta al mundo del picante.', image: '/images/miel-chica.jpg', badge: 'Ideal para principiantes', active: true },
         { id: 'miel-picante-mediana', name: 'Miel Picante Brasas', size: 'Frasco Mediano', weight: '300g', price: 4900, stock: 18, spiceLevel: 3, description: 'El equilibrio perfecto.', image: '/images/miel-mediana.jpg', badge: 'Mas vendido', active: true },

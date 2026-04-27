@@ -61,7 +61,7 @@ async function loadProductsScroll() {
     } else {
       throw new Error('fallback');
     }
-  } catch {
+  } catch(e) {
     products = [
       { id: 'miel-picante-chica', name: 'Fuego Lento', size: 'Frasco Chico', weight: '150g', price: 2800, stock: 25, spiceLevel: 2, image: '/images/miel-chica.jpg', badge: 'Para principiantes', active: true },
       { id: 'miel-picante-mediana', name: 'Brasas', size: 'Frasco Mediano', weight: '300g', price: 4900, stock: 18, spiceLevel: 3, image: '/images/miel-mediana.jpg', badge: 'Mas vendido', active: true },
@@ -316,9 +316,9 @@ async function submitContact(e) {
 // =====================================================
 const Auth = (() => {
   const SK = 'cdp_user', AK = 'cdp_admin_token', UK = 'cdp_users';
-  const getUsers = () => { try { return JSON.parse(localStorage.getItem(UK)||'[]'); } catch { return []; } };
+  const getUsers = () => { try { return JSON.parse(localStorage.getItem(UK)||'[]'); } catch(e) { return []; } };
   const saveUsers = u => localStorage.setItem(UK, JSON.stringify(u));
-  const getSession = () => { try { return JSON.parse(localStorage.getItem(SK)); } catch { return null; } };
+  const getSession = () => { try { return JSON.parse(localStorage.getItem(SK)); } catch(e) { return null; } };
   const saveSession = u => localStorage.setItem(SK, JSON.stringify(u));
   const clearSession = () => { localStorage.removeItem(SK); localStorage.removeItem(AK); };
   const register = (name, email, password) => {
@@ -338,7 +338,7 @@ const Auth = (() => {
       const data = await res.json();
       if (data.token) { localStorage.setItem(AK, data.token); saveSession({ name: 'Admin', email, role: 'admin' }); return { ok: true }; }
       return { ok: false, error: data.error || 'Credenciales incorrectas' };
-    } catch {
+    } catch(e) {
       if (email === 'admin@clubdelpicante.com.ar' && password === 'ClubPicante2024!') {
         localStorage.setItem(AK, 'demo-admin-token'); saveSession({ name: 'Admin', email, role: 'admin' }); return { ok: true };
       }
@@ -456,15 +456,15 @@ async function adminTab(tab) {
   if (tab === 'dashboard') {
     title.textContent = 'DASHBOARD';
     try { const res = await fetch('/api/admin/stats', { headers: { Authorization: 'Bearer ' + token } }); content.innerHTML = renderDashboard(await res.json()); }
-    catch { content.innerHTML = renderDashboard({ totalOrders:0, confirmedOrders:0, pendingOrders:0, todayOrders:0, totalRevenue:0, last7Days:[{date:'Lun',orders:0,revenue:0},{date:'Mar',orders:0,revenue:0},{date:'Mie',orders:0,revenue:0},{date:'Jue',orders:0,revenue:0},{date:'Vie',orders:0,revenue:0},{date:'Sab',orders:0,revenue:0},{date:'Dom',orders:0,revenue:0}], topProduct:null, lowStockProducts:[] }); }
+    catch(e) { content.innerHTML = renderDashboard({ totalOrders:0, confirmedOrders:0, pendingOrders:0, todayOrders:0, totalRevenue:0, last7Days:[{date:'Lun',orders:0,revenue:0},{date:'Mar',orders:0,revenue:0},{date:'Mie',orders:0,revenue:0},{date:'Jue',orders:0,revenue:0},{date:'Vie',orders:0,revenue:0},{date:'Sab',orders:0,revenue:0},{date:'Dom',orders:0,revenue:0}], topProduct:null, lowStockProducts:[] }); }
   } else if (tab === 'orders') {
     title.textContent = 'PEDIDOS';
     try { const res = await fetch('/api/admin/orders?limit=50', { headers: { Authorization: 'Bearer ' + token } }); const data = await res.json(); content.innerHTML = renderOrdersTable(data.orders||[]); }
-    catch { content.innerHTML = renderOrdersTable([]); }
+    catch(e) { content.innerHTML = renderOrdersTable([]); }
   } else if (tab === 'products') {
     title.textContent = 'PRODUCTOS';
     try { const res = await fetch('/api/admin/products', { headers: { Authorization: 'Bearer ' + token } }); content.innerHTML = renderProductsTable(await res.json()); }
-    catch { const res2 = await fetch('/api/products'); content.innerHTML = renderProductsTable(await res2.json()); }
+    catch(e) { const res2 = await fetch('/api/products'); content.innerHTML = renderProductsTable(await res2.json()); }
   }
 }
 
@@ -496,7 +496,7 @@ async function saveProduct(id) {
   const stock = parseInt(document.getElementById('stock-'+id).value||0);
   const active = document.getElementById('active-'+id).classList.contains('on');
   try { await fetch('/api/admin/products/'+id, { method:'PATCH', headers:{'Content-Type':'application/json',Authorization:'Bearer '+token}, body:JSON.stringify({price,stock,active}) }); showToast('Producto actualizado', 'success'); }
-  catch { showToast('Error al guardar', 'error'); }
+  catch(e) { showToast('Error al guardar', 'error'); }
 }
 
 function toggleProductActive(id, btn) { btn.classList.toggle('on'); }
@@ -516,7 +516,7 @@ async function openOrderModal(orderId) {
       '<div class="modal-section"><h4>Cliente</h4><div class="modal-row"><span>Nombre</span><span>' + (order.customer&&order.customer.name||'—') + '</span></div><div class="modal-row"><span>Email</span><span>' + (order.customer&&order.customer.email||'—') + '</span></div></div>' +
       '<div class="modal-section"><h4>Productos</h4>' + (order.items||[]).map(i => '<div class="modal-row"><span>' + i.name + ' x' + i.quantity + '</span><span>$' + (i.price*i.quantity).toLocaleString('es-AR') + '</span></div>').join('') + '<div class="modal-row" style="font-weight:700;color:var(--orange)"><span>TOTAL</span><span>$' + (order.total||0).toLocaleString('es-AR') + '</span></div></div>' +
       '<div class="modal-section"><h4>Cambiar estado</h4><select class="modal-status-select" id="newStatus">' + opts.map(s => '<option value="' + s + '"' + (order.status===s?' selected':'') + '>' + sl[s] + '</option>').join('') + '</select><button class="btn-primary btn-full" style="margin-top:12px" onclick="updateOrderStatus(\'' + orderId + '\')">Actualizar</button></div>';
-  } catch { content.innerHTML = '<div style="padding:40px;text-align:center;color:var(--grey)">Error al cargar</div>'; }
+  } catch(e) { content.innerHTML = '<div style="padding:40px;text-align:center;color:var(--grey)">Error al cargar</div>'; }
 }
 
 function closeOrderModal() { document.getElementById('orderModal').classList.remove('open'); }
@@ -525,7 +525,7 @@ async function updateOrderStatus(orderId) {
   const token = localStorage.getItem('cdp_admin_token');
   const status = document.getElementById('newStatus').value;
   try { await fetch('/api/admin/orders/'+orderId, { method:'PATCH', headers:{'Content-Type':'application/json',Authorization:'Bearer '+token}, body:JSON.stringify({status}) }); showToast('Estado actualizado', 'success'); closeOrderModal(); adminTab('orders'); }
-  catch { showToast('Error al actualizar', 'error'); }
+  catch(e) { showToast('Error al actualizar', 'error'); }
 }
 
 function adminLogout() {
