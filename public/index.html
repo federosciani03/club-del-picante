@@ -82,21 +82,21 @@
       position: absolute; top: 14px; left: 14px;
       width: 32px; height: 32px; border-radius: 50%;
       background: rgba(0,0,0,0.55); backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
       border: 1px solid rgba(255,255,255,0.18);
       display: flex; align-items: center; justify-content: center;
-      opacity: 0; transform: translateY(-4px); transition: var(--transition);
+      opacity: 1; transform: translateY(0); transition: var(--transition);
     }
-    .colab-ig-card:hover .colab-ig-ig-icon { opacity: 1; transform: translateY(0); }
     .colab-ig-handle { font-size: 0.72rem; font-weight: 700; color: var(--orange); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 5px; }
     .colab-ig-card:hover .colab-ig-handle { color: var(--orange-light); }
     .colab-ig-name { font-family: var(--font-display); font-size: clamp(1.3rem,3vw,1.7rem); color: white; line-height: 1.05; margin-bottom: 10px; }
     .colab-ig-arrow {
-      font-size: 0.72rem; font-weight: 700; color: rgba(255,255,255,0.4);
+      font-size: 0.72rem; font-weight: 700; color: var(--orange);
       text-transform: uppercase; letter-spacing: 0.1em;
       display: flex; align-items: center; gap: 6px;
-      transform: translateY(4px); opacity: 0; transition: var(--transition);
+      transform: translateY(0); opacity: 1; transition: var(--transition);
     }
-    .colab-ig-card:hover .colab-ig-arrow { opacity: 1; transform: translateY(0); color: var(--orange); }
+    .colab-ig-card:hover .colab-ig-arrow { color: var(--orange-light); }
     .colab-ig-tag {
       position: absolute; top: 14px; right: 14px;
       background: rgba(0,0,0,0.65); backdrop-filter: blur(6px);
@@ -107,13 +107,6 @@
       transition: var(--transition);
     }
     .colab-ig-card:hover .colab-ig-tag { background: var(--orange); border-color: var(--orange); }
-
-    /* ---- TOUCH DEVICES: show hover-only elements always ---- */
-    @media (hover: none) {
-      .colab-ig-ig-icon { opacity: 1; transform: translateY(0); }
-      .colab-ig-arrow { opacity: 1; transform: translateY(0); color: var(--orange); }
-      .colab-ig-card:hover { transform: none; }
-    }
 
     /* ---- GALERÍA MOSAIC GRID ---- */
     .gallery-scroll-section { padding: 80px 0; background: var(--black); border-top: 1px solid var(--black-border); }
