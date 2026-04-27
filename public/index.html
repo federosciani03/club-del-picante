@@ -19,6 +19,8 @@
     body { overflow-x: hidden; }
     .page { display: block !important; min-height: unset; padding-top: 0; }
     #app { padding-top: 64px; }
+    /* Hero has all position:absolute children so needs explicit height */
+    #hero { min-height: 100vh; min-height: 100svh; }
 
     /* ---- OUT NOW TICKER ---- */
     .outnow-ticker {
