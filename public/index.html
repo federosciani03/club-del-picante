@@ -108,6 +108,13 @@
     }
     .colab-ig-card:hover .colab-ig-tag { background: var(--orange); border-color: var(--orange); }
 
+    /* ---- TOUCH DEVICES: show hover-only elements always ---- */
+    @media (hover: none) {
+      .colab-ig-ig-icon { opacity: 1; transform: translateY(0); }
+      .colab-ig-arrow { opacity: 1; transform: translateY(0); color: var(--orange); }
+      .colab-ig-card:hover { transform: none; }
+    }
+
     /* ---- GALERÍA MOSAIC GRID ---- */
     .gallery-scroll-section { padding: 80px 0; background: var(--black); border-top: 1px solid var(--black-border); }
     .gallery-scroll-section .inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
@@ -642,8 +649,8 @@
       <div class="inner">
         <p class="s-eyebrow">Hablemos</p>
         <h2 class="s-title">CONTACTO</h2>
-        <div class="contact-scroll-grid">
-          <div style="display:flex;flex-direction:column;gap:14px;flex:1">
+        <div class="contact-scroll-grid" style="justify-content:center;">
+          <div style="display:flex;flex-direction:column;gap:14px;flex:1;max-width:480px;">
             <div class="contact-card">
               <span class="contact-icon">📱</span>
               <h3>WhatsApp</h3>
@@ -658,36 +665,6 @@
               <h3>Instagram</h3>
               <p>Recetas, collabs y lanzamientos.</p>
               <a href="https://instagram.com/cdpicante" target="_blank" rel="noopener" class="btn-instagram">@cdpicante</a>
-            </div>
-          </div>
-          <div style="flex:1">
-            <div class="contact-card" style="height:100%">
-              <h3 style="margin-bottom:20px;font-size:1.3rem">Mandanos un <span style="color:var(--orange)">mensaje</span></h3>
-              <form onsubmit="submitContact(event)" style="display:flex;flex-direction:column;gap:14px">
-                <div class="form-group">
-                  <label>Nombre</label>
-                  <input type="text" id="contactName" placeholder="Tu nombre" required/>
-                </div>
-                <div class="form-group">
-                  <label>Email</label>
-                  <input type="email" id="contactEmail" placeholder="tu@email.com" required/>
-                </div>
-                <div class="form-group">
-                  <label>Asunto</label>
-                  <select id="contactSubject">
-                    <option value="consulta">Consulta general</option>
-                    <option value="mayorista">Venta mayorista</option>
-                    <option value="colab">Propuesta de colab</option>
-                    <option value="pedido">Consulta sobre pedido</option>
-                    <option value="otro">Otro</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label>Mensaje</label>
-                  <textarea id="contactMsg" rows="3" placeholder="Contanos..." required></textarea>
-                </div>
-                <button type="submit" class="btn-primary" style="width:100%;justify-content:center;display:flex"><span>Enviar mensaje</span></button>
-              </form>
             </div>
           </div>
         </div>
