@@ -553,6 +553,27 @@ function handleURLParams() {
   }
 }
 
+// ---- GALLERY CAROUSEL ---- //
+function gallerySnapTo(idx) {
+  const track = document.getElementById('galleryTrack');
+  if (!track) return;
+  const card = track.querySelectorAll('.gallery-snap-card')[idx];
+  if (card) card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+}
+
+function initGalleryCarousel() {
+  const track = document.getElementById('galleryTrack');
+  const dots = document.querySelectorAll('.gallery-dot');
+  if (!track || !dots.length) return;
+  track.addEventListener('scroll', () => {
+    const cards = track.querySelectorAll('.gallery-snap-card');
+    const scrollLeft = track.scrollLeft;
+    const cardW = cards[0] ? cards[0].offsetWidth + 12 : 1;
+    const idx = Math.min(Math.round(scrollLeft / cardW), dots.length - 1);
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+  }, { passive: true });
+}
+
 // ---- INIT ---- //
 document.addEventListener('DOMContentLoaded', () => {
   initNavbar();
@@ -561,4 +582,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initParticles();
   loadProductsScroll();
   handleURLParams();
+  initGalleryCarousel();
 });
