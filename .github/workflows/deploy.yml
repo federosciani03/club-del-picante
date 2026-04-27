@@ -24,11 +24,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Generate favicon PNG from logo
+        run: |
+          convert public/images/logocdp.jpg -resize 128x128 public/favicon.png
+
       - name: Fix asset paths for GitHub Pages
         run: |
           sed -i \
             -e 's|href="/css/|href="css/|g' \
             -e 's|href="/images/|href="images/|g' \
+            -e 's|href="/favicon.png|href="favicon.png|g' \
             -e 's|src="/js/|src="js/|g' \
             -e 's|src="/images/|src="images/|g' \
             public/index.html public/colabs.html
