@@ -26,7 +26,14 @@ jobs:
 
       - name: Generate favicon PNG from logo
         run: |
-          convert public/images/logocdp.jpg -resize 128x128 public/favicon.png
+          pip install Pillow -q
+          python3 << 'PYEOF'
+          from PIL import Image
+          img = Image.open('public/images/logocdp.jpg').convert('RGBA')
+          img = img.resize((128, 128), Image.LANCZOS)
+          img.save('public/favicon.png', 'PNG')
+          print('favicon.png generated')
+          PYEOF
 
       - name: Fix asset paths for GitHub Pages
         run: |
