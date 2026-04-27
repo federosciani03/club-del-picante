@@ -71,10 +71,10 @@ const Products = (() => {
       return allProducts;
     } catch {
       allProducts = [
-        { id: 'miel-picante-chica', name: 'Miel Picante Fuego Lento', size: 'Frasco Chico', weight: '150g', price: 2800, stock: 25, spiceLevel: 2, description: 'La entrada perfecta al mundo del picante.', image: '/images/miel-chica.jpg', badge: 'Ideal para principiantes', active: true },
-        { id: 'miel-picante-mediana', name: 'Miel Picante Brasas', size: 'Frasco Mediano', weight: '300g', price: 4900, stock: 18, spiceLevel: 3, description: 'El equilibrio perfecto.', image: '/images/miel-mediana.jpg', badge: 'Mas vendido', active: true },
-        { id: 'miel-picante-grande', name: 'Miel Picante Infierno', size: 'Frasco Grande', weight: '500g', price: 7500, stock: 12, spiceLevel: 5, description: 'Para los valientes.', image: '/images/miel-grande.jpg', badge: 'Nivel extremo', active: true },
-        { id: 'miel-picante-regalo', name: 'Kit Degustacion Picante', size: 'Set x3', weight: '3 frascos 150g', price: 9200, stock: 8, spiceLevel: null, description: 'Los tres niveles en un pack.', image: '/images/miel-kit.jpg', badge: 'Ideal para regalo', active: true }
+        { id: 'miel-picante-chica', name: 'Miel Picante Fuego Lento', size: 'Frasco Chico', weight: '150g', price: 2800, stock: 25, spiceLevel: 2, description: 'La entrada perfecta al mundo del picante.', image: 'images/miel-chica.jpg', badge: 'Ideal para principiantes', active: true },
+        { id: 'miel-picante-mediana', name: 'Miel Picante Brasas', size: 'Frasco Mediano', weight: '300g', price: 4900, stock: 18, spiceLevel: 3, description: 'El equilibrio perfecto.', image: 'images/miel-mediana.jpg', badge: 'Mas vendido', active: true },
+        { id: 'miel-picante-grande', name: 'Miel Picante Infierno', size: 'Frasco Grande', weight: '500g', price: 7500, stock: 12, spiceLevel: 5, description: 'Para los valientes.', image: 'images/miel-grande.jpg', badge: 'Nivel extremo', active: true },
+        { id: 'miel-picante-regalo', name: 'Kit Degustacion Picante', size: 'Set x3', weight: '3 frascos 150g', price: 9200, stock: 8, spiceLevel: null, description: 'Los tres niveles en un pack.', image: 'images/miel-kit.jpg', badge: 'Ideal para regalo', active: true }
       ];
       return allProducts;
     }
