@@ -1,0 +1,221 @@
+/* =====================================================
+   CLUB DEL PICANTE — Animaciones
+   ===================================================== */
+
+@keyframes flicker {
+  0%, 90%, 100% { transform: scale(1) rotate(0deg); }
+  92% { transform: scale(1.05) rotate(-2deg); }
+  96% { transform: scale(0.98) rotate(1deg); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes scrollHint {
+  0%, 100% { opacity: 0.3; transform: scaleY(1); }
+  50% { opacity: 1; transform: scaleY(0.7); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(244,121,32,0.4); }
+  50% { box-shadow: 0 0 0 12px rgba(244,121,32,0); }
+}
+
+@keyframes fireGlow {
+  0%, 100% { text-shadow: 0 0 20px rgba(244,121,32,0.3); }
+  50% { text-shadow: 0 0 60px rgba(244,121,32,0.7), 0 0 100px rgba(204,17,0,0.3); }
+}
+
+/* ---- Animaciones de entrada ---- */
+.animate-on-scroll {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.animate-on-scroll.visible {
+  opacity: 1; transform: translateY(0);
+}
+
+/* ---- Hero animations ---- */
+.hero-title-line1 {
+  animation: fadeInUp 0.8s ease 0.1s both;
+}
+.hero-title-line2 {
+  animation: fadeInUp 0.8s ease 0.25s both;
+}
+.hero-title-line3 {
+  animation: fadeInUp 0.8s ease 0.4s both;
+  animation-iteration-count: 1;
+}
+.hero-subtitle { animation: fadeInUp 0.8s ease 0.55s both; }
+.hero-cta { animation: fadeInUp 0.8s ease 0.7s both; }
+.hero-product-showcase { animation: fadeInLeft 0.8s ease 1s both; }
+
+/* ---- Glow animado en título ---- */
+.hero-title-line3 { animation: fadeInUp 0.8s ease 0.4s both, fireGlow 3s ease-in-out 1.2s infinite; }
+
+/* ---- Partículas ---- */
+.hero-particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: particleFloat linear infinite;
+}
+@keyframes particleFloat {
+  0% { transform: translateY(100vh) scale(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 0.5; }
+  100% { transform: translateY(-100px) scale(1); opacity: 0; }
+}
+
+/* ---- Navbar scroll effect ---- */
+.navbar { transition: all 0.3s ease; }
+.navbar.scrolled {
+  background: rgba(10, 10, 10, 0.98);
+  border-bottom-color: rgba(244,121,32,0.2);
+}
+
+/* ---- Page transitions ---- */
+.page {
+  animation: none;
+}
+.page.page-enter {
+  animation: fadeInUp 0.4s ease both;
+}
+
+/* ---- Product card hover ---- */
+.product-card-img::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at center, rgba(244,121,32,0.1), transparent);
+  opacity: 0; transition: opacity 0.3s;
+}
+.product-card:hover .product-card-img::after { opacity: 1; }
+
+/* ---- Spice level hover ---- */
+.spice-level-item:nth-child(1):hover { background: rgba(255,200,0,0.05); }
+.spice-level-item:nth-child(2):hover { background: rgba(255,140,0,0.05); }
+.spice-level-item:nth-child(3):hover { background: rgba(244,60,0,0.05); }
+.spice-level-item:nth-child(4):hover { background: rgba(204,0,0,0.07); }
+
+/* ---- Fire particles on hover ---- */
+.btn-primary:active { transform: translateY(0) scale(0.98); }
+
+/* ---- Cart badge pulse ---- */
+.cart-badge.new { animation: pulse 0.6s ease; }
+
+/* ---- Stats counter animation ---- */
+.stat-value { transition: color 0.3s; }
+
+/* ---- Chart bars ---- */
+.chart-bar { 
+  transform-origin: bottom;
+  animation: barGrow 0.6s ease both;
+}
+@keyframes barGrow {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+.chart-bar:nth-child(1) { animation-delay: 0.0s; }
+.chart-bar:nth-child(2) { animation-delay: 0.1s; }
+.chart-bar:nth-child(3) { animation-delay: 0.2s; }
+.chart-bar:nth-child(4) { animation-delay: 0.3s; }
+.chart-bar:nth-child(5) { animation-delay: 0.4s; }
+.chart-bar:nth-child(6) { animation-delay: 0.5s; }
+.chart-bar:nth-child(7) { animation-delay: 0.6s; }
+
+/* ---- Timeline ---- */
+.timeline-item {
+  opacity: 0; transform: translateX(-20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.timeline-item.visible { opacity: 1; transform: translateX(0); }
+
+/* ---- Value cards stagger ---- */
+.value-card:nth-child(1) { animation-delay: 0.1s; }
+.value-card:nth-child(2) { animation-delay: 0.2s; }
+.value-card:nth-child(3) { animation-delay: 0.3s; }
+.value-card:nth-child(4) { animation-delay: 0.4s; }
+
+/* ---- Mobile menu items ---- */
+.mobile-menu.open .mobile-nav-links a {
+  animation: fadeInLeft 0.4s ease both;
+}
+.mobile-menu.open .mobile-nav-links a:nth-child(1) { animation-delay: 0.1s; }
+.mobile-menu.open .mobile-nav-links a:nth-child(2) { animation-delay: 0.15s; }
+.mobile-menu.open .mobile-nav-links a:nth-child(3) { animation-delay: 0.2s; }
+.mobile-menu.open .mobile-nav-links a:nth-child(4) { animation-delay: 0.25s; }
+.mobile-menu.open .mobile-nav-links a:nth-child(5) { animation-delay: 0.3s; }
+
+/* ---- Responsive ---- */
+@media (min-width: 768px) {
+  .hero-fire-left { font-size: 14rem; opacity: 0.04; left: -3rem; }
+  .hero-fire-right { font-size: 14rem; opacity: 0.04; right: -3rem; }
+
+  .features-strip { grid-template-columns: repeat(4, 1fr); }
+
+  .home-products-grid { grid-template-columns: repeat(4, 1fr); }
+  .products-grid { grid-template-columns: repeat(3, 1fr); }
+
+  .spice-section-inner { flex-direction: row; align-items: center; gap: 60px; }
+  .spice-text { flex: 1; }
+  .spice-levels { flex: 1; grid-template-columns: repeat(2, 1fr); }
+
+  .values-grid { grid-template-columns: repeat(4, 1fr); }
+
+  .about-story { flex-direction: row; }
+  .about-story-text { flex: 1; }
+  .about-story-visual { flex: 1; }
+
+  .delivery-options { flex-direction: row; }
+  .delivery-card { flex: 1; }
+
+  .contact-container { flex-direction: row; }
+  .contact-info { flex: 1; }
+  .contact-form-wrapper { flex: 1; }
+
+  .footer-inner { flex-direction: row; }
+  .footer-brand { flex: 1; }
+}
+
+@media (min-width: 1024px) {
+  .hero { min-height: calc(100vh - var(--navbar-h)); padding: 80px 60px; }
+  .products-grid { grid-template-columns: repeat(4, 1fr); }
+  .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+  .gallery-item-large { grid-column: span 2; }
+  .gallery-item-wide { grid-column: span 3; aspect-ratio: 16/5; }
+
+  .home-products-section,
+  .spice-section,
+  .gallery-section,
+  .testimonials-section,
+  .about-content,
+  .stores-container,
+  .contact-container,
+  .cart-container,
+  .checkout-container {
+    max-width: 1200px; margin: 0 auto;
+  }
+  .page-header { padding: 80px 60px 48px; }
+}

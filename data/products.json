@@ -1,0 +1,56 @@
+{
+  "products": [
+    {
+      "id": "miel-picante-chica",
+      "name": "Miel Picante Fuego Lento",
+      "size": "Frasco Chico",
+      "weight": "150g",
+      "price": 2800,
+      "stock": 25,
+      "spiceLevel": 2,
+      "description": "La entrada perfecta al mundo del picante. Miel artesanal con un toque suave de ají molido. Ideal para quesos, tostadas y madrugadas curiosas.",
+      "image": "/images/miel-chica.jpg",
+      "badge": "Ideal para principiantes",
+      "active": true
+    },
+    {
+      "id": "miel-picante-mediana",
+      "name": "Miel Picante Brasas",
+      "size": "Frasco Mediano",
+      "weight": "300g",
+      "price": 4900,
+      "stock": 18,
+      "spiceLevel": 3,
+      "description": "El equilibrio perfecto. Miel de flores silvestres con chipotles ahumados y un finish que te avisa que estás vivo.",
+      "image": "/images/miel-mediana.jpg",
+      "badge": "Más vendido",
+      "active": true
+    },
+    {
+      "id": "miel-picante-grande",
+      "name": "Miel Picante Infierno",
+      "size": "Frasco Grande",
+      "weight": "500g",
+      "price": 7500,
+      "stock": 12,
+      "spiceLevel": 5,
+      "description": "Para los que no le huyen al fuego. Miel pura con habanero y ghost pepper. No apto para cobardes. Úsala con precaución... o no.",
+      "image": "/images/miel-grande.jpg",
+      "badge": "Nivel extremo 🔥",
+      "active": true
+    },
+    {
+      "id": "miel-picante-regalo",
+      "name": "Kit Degustación Picante",
+      "size": "Set x3",
+      "weight": "3 frascos 150g",
+      "price": 9200,
+      "stock": 8,
+      "spiceLevel": null,
+      "description": "Los tres niveles en un solo pack. El regalo perfecto para el amante del picante. Presentación especial con caja artesanal.",
+      "image": "/images/miel-kit.jpg",
+      "badge": "Ideal para regalo 🎁",
+      "active": true
+    }
+  ]
+}

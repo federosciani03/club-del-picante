@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Club del Picante — Hot Honey artesanal. El fuego se encuentra con el sabor."/>
+  <meta name="theme-color" content="#0a0a0a"/>
+  <title>Club del Picante 🌶️</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700;900&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/css/main.css"/>
+  <link rel="stylesheet" href="/css/components.css"/>
+  <link rel="stylesheet" href="/css/animations.css"/>
+  <style>
+    /* ---- SCROLL PAGE OVERRIDES ---- */
+    body { overflow-x: hidden; }
+    .page { display: block !important; min-height: unset; padding-top: 0; }
+    #app { padding-top: 64px; }
+
+    /* ---- OUT NOW TICKER ---- */
+    .outnow-ticker {
+      background: linear-gradient(135deg, var(--red), var(--orange));
+      overflow: hidden; padding: 14px 0; position: relative;
+    }
+    .ticker-track {
+      display: flex; gap: 0;
+      animation: tickerMove 18s linear infinite;
+      width: max-content;
+    }
+    .ticker-item {
+      font-family: var(--font-display);
+      font-size: 1.4rem; letter-spacing: 0.15em;
+      white-space: nowrap; padding: 0 32px;
+      opacity: 0.95;
+    }
+    .ticker-sep { opacity: 0.5; padding: 0 8px; }
+    @keyframes tickerMove { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ---- PRODUCTS SCROLL SECTION ---- */
+    .products-scroll-section { padding: 70px 0 80px; background: var(--black); }
+    .products-scroll-section .inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    .products-scroll-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 16px; margin-top: 40px;
+    }
+    @media(min-width:768px) { .products-scroll-grid { grid-template-columns: repeat(4, 1fr); } }
+
+    /* ---- COLLABS SECTION ---- */
+    .collabs-scroll-section { padding: 80px 0; background: var(--black-soft); border-top: 1px solid var(--black-border); }
+    .collabs-scroll-section .inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    .collabs-ig-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px; margin-top: 40px;
+    }
+    @media(min-width:640px) { .collabs-ig-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
+    .colab-ig-card {
+      position: relative; border-radius: var(--radius);
+      overflow: hidden; aspect-ratio: 4 / 5;
+      background: var(--black-card);
+      border: 1px solid var(--black-border);
+      cursor: pointer; transition: var(--transition);
+      text-decoration: none; display: block;
+    }
+    @media(max-width:639px) { .colab-ig-card { aspect-ratio: 16 / 9; } }
+    .colab-ig-card:hover { transform: translateY(-8px); border-color: var(--orange); box-shadow: 0 20px 60px rgba(244,121,32,0.25); }
+    .colab-ig-card img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; transition: transform 0.5s ease; }
+    .colab-ig-card:hover img { transform: scale(1.07); }
+    .colab-ig-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.3) 45%, rgba(0,0,0,0.05) 100%);
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 22px 20px; transition: var(--transition);
+    }
+    .colab-ig-card:hover .colab-ig-overlay { background: linear-gradient(to top, rgba(10,4,0,0.95) 0%, rgba(244,121,32,0.15) 60%, transparent 100%); }
+    .colab-ig-ig-icon {
+      position: absolute; top: 14px; left: 14px;
+      width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(0,0,0,0.55); backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.18);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transform: translateY(-4px); transition: var(--transition);
+    }
+    .colab-ig-card:hover .colab-ig-ig-icon { opacity: 1; transform: translateY(0); }
+    .colab-ig-handle { font-size: 0.72rem; font-weight: 700; color: var(--orange); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 5px; }
+    .colab-ig-card:hover .colab-ig-handle { color: var(--orange-light); }
+    .colab-ig-name { font-family: var(--font-display); font-size: clamp(1.3rem,3vw,1.7rem); color: white; line-height: 1.05; margin-bottom: 10px; }
+    .colab-ig-arrow {
+      font-size: 0.72rem; font-weight: 700; color: rgba(255,255,255,0.4);
+      text-transform: uppercase; letter-spacing: 0.1em;
+      display: flex; align-items: center; gap: 6px;
+      transform: translateY(4px); opacity: 0; transition: var(--transition);
+    }
+    .colab-ig-card:hover .colab-ig-arrow { opacity: 1; transform: translateY(0); color: var(--orange); }
+    .colab-ig-tag {
+      position: absolute; top: 14px; right: 14px;
+      background: rgba(0,0,0,0.65); backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 20px; padding: 5px 12px;
+      font-size: 0.65rem; font-weight: 700; color: white;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      transition: var(--transition);
+    }
+    .colab-ig-card:hover .colab-ig-tag { background: var(--orange); border-color: var(--orange); }
+
+    /* ---- GALERÍA MOSAIC GRID ---- */
+    .gallery-scroll-section { padding: 80px 0; background: var(--black); border-top: 1px solid var(--black-border); }
+    .gallery-scroll-section .inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    .gallery-mosaic {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-top: 40px;
+    }
+    @media(min-width:640px) {
+      .gallery-mosaic {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: 240px 240px 220px;
+        gap: 10px;
+      }
+    }
+    .gm-item {
+      border-radius: var(--radius); overflow: hidden;
+      background: var(--black-card); border: 1px solid var(--black-border);
+      cursor: pointer; transition: var(--transition);
+      aspect-ratio: 1 / 1;
+    }
+    @media(min-width:640px) { .gm-item { aspect-ratio: unset; } }
+    .gm-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
+    .gm-item:hover { border-color: var(--orange); box-shadow: 0 8px 30px rgba(244,121,32,0.15); }
+    .gm-item:hover img { transform: scale(1.05); }
+    @media(min-width:640px) {
+      .gm-1 { grid-column: 1; grid-row: 1 / 3; }
+      .gm-2 { grid-column: 2; grid-row: 1; }
+      .gm-3 { grid-column: 3; grid-row: 1; }
+      .gm-4 { grid-column: 4; grid-row: 1 / 3; }
+      .gm-5 { grid-column: 2 / 4; grid-row: 2; }
+      .gm-6 { grid-column: 1 / 3; grid-row: 3; }
+      .gm-7 { grid-column: 3 / 5; grid-row: 3; }
+    }
+    .gallery-lightbox {
+      position: fixed; inset: 0; z-index: 500;
+      background: rgba(0,0,0,0.95);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none; transition: opacity 0.3s;
+    }
+    .gallery-lightbox.open { opacity: 1; pointer-events: all; }
+    .gallery-lightbox img { max-width: 90vw; max-height: 90vh; border-radius: var(--radius); }
+    .gallery-lightbox-close {
+      position: absolute; top: 20px; right: 20px;
+      font-size: 2rem; color: white; cursor: pointer;
+      background: rgba(255,255,255,0.1); border: none;
+      width: 44px; height: 44px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* ---- VIDEO SECTION ---- */
+    .video-scroll-section { padding: 80px 0; background: var(--black-soft); border-top: 1px solid var(--black-border); }
+    .video-scroll-section .inner { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+    .video-coming-soon {
+      margin-top: 32px; border-radius: var(--radius); overflow: hidden;
+      background: linear-gradient(135deg, #1a0800 0%, #0d0d0d 100%);
+      border: 1px solid var(--black-border);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 72px 24px; text-align: center; gap: 16px;
+    }
+    .video-coming-icon {
+      width: 80px; height: 80px;
+      background: linear-gradient(135deg, var(--orange), var(--red));
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 50px rgba(244,121,32,0.3); margin-bottom: 8px;
+    }
+    .video-coming-icon svg { width: 36px; height: 36px; fill: white; margin-left: 5px; }
+    .video-coming-title { font-family: var(--font-display); font-size: clamp(1.8rem,5vw,2.8rem); margin-bottom: 4px; }
+    .video-coming-title span { color: var(--orange); }
+    .video-coming-sub { color: var(--grey); font-size: 0.88rem; max-width: 380px; line-height: 1.7; }
+    .video-coming-yt {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #ff0000; color: white; border-radius: 6px;
+      padding: 10px 20px; font-weight: 700; font-size: 0.82rem;
+      text-decoration: none; margin-top: 8px; transition: var(--transition);
+    }
+    .video-coming-yt:hover { background: #cc0000; transform: translateY(-2px); }
+    .video-clips-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 24px; }
+    @media(min-width:640px) { .video-clips-grid { grid-template-columns: repeat(4, 1fr); } }
+    .video-clip-placeholder {
+      border-radius: var(--radius-sm); overflow: hidden;
+      background: var(--black-card); border: 1px solid var(--black-border);
+      aspect-ratio: 9/16; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 8px;
+    }
+    .video-clip-ph-icon { font-size: 1.8rem; opacity: 0.4; }
+    .video-clip-title { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--grey); padding: 7px 10px; background: var(--black-card); text-align: center; }
+
+    /* ---- MAPA ---- */
+    .map-scroll-section { padding: 80px 0; background: var(--black); border-top: 1px solid var(--black-border); }
+    .map-scroll-section .inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    .map-layout { display: flex; flex-direction: column; gap: 32px; margin-top: 40px; }
+    @media(min-width:768px) { .map-layout { flex-direction: row; } }
+    .map-points { display: flex; flex-direction: column; gap: 12px; flex-shrink: 0; }
+    @media(min-width:768px) { .map-points { width: 280px; } }
+    .map-point-card {
+      background: var(--black-card); border: 1.5px solid var(--black-border);
+      border-radius: var(--radius); padding: 16px 18px;
+      cursor: pointer; transition: var(--transition);
+    }
+    .map-point-card:hover, .map-point-card.active { border-color: var(--orange); background: rgba(244,121,32,0.06); }
+    .map-point-icon { font-size: 1.5rem; margin-bottom: 6px; }
+    .map-point-name { font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 3px; }
+    .map-point-address { font-size: 0.78rem; color: var(--grey); margin-bottom: 4px; }
+    .map-point-hours { font-size: 0.72rem; color: var(--orange); font-weight: 700; }
+    .map-container { flex: 1; min-height: 380px; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--black-border); background: var(--black-card); }
+    .map-container iframe { width: 100%; height: 100%; min-height: 380px; border: none; display: block; }
+    .map-placeholder { width: 100%; height: 380px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: var(--grey); font-size: 0.85rem; }
+
+    /* ---- CONTACT SCROLL ---- */
+    .contact-scroll-section { padding: 80px 0; background: var(--black-soft); border-top: 1px solid var(--black-border); }
+    .contact-scroll-section .inner { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+    .contact-scroll-grid { display: flex; flex-direction: column; gap: 32px; margin-top: 40px; }
+    @media(min-width:768px) { .contact-scroll-grid { flex-direction: row; } }
+
+    /* ---- CART OVERLAY ---- */
+    .cart-overlay {
+      position: fixed; inset: 0; z-index: 300;
+      background: rgba(0,0,0,0.75); backdrop-filter: blur(4px);
+      opacity: 0; pointer-events: none; transition: opacity 0.3s;
+    }
+    .cart-overlay.open { opacity: 1; pointer-events: all; }
+    .cart-panel {
+      position: fixed; top: 0; right: 0; bottom: 0; width: 100%; max-width: 420px;
+      background: var(--black-card); border-left: 1px solid var(--black-border);
+      transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+      display: flex; flex-direction: column; z-index: 301;
+    }
+    .cart-overlay.open .cart-panel { transform: translateX(0); }
+    .cart-panel-header {
+      padding: 20px 24px; border-bottom: 1px solid var(--black-border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .cart-panel-header h2 { font-size: 1.5rem; }
+    .cart-panel-close { font-size: 1.3rem; color: var(--grey); cursor: pointer; background: none; border: none; padding: 4px; transition: var(--transition); }
+    .cart-panel-close:hover { color: var(--white); }
+    .cart-panel-body { flex: 1; overflow-y: auto; padding: 16px 24px; }
+    .cart-panel-footer { padding: 20px 24px; border-top: 1px solid var(--black-border); }
+
+    /* ---- CHECKOUT OVERLAY ---- */
+    .checkout-overlay {
+      position: fixed; inset: 0; z-index: 400;
+      background: rgba(0,0,0,0.85); backdrop-filter: blur(6px);
+      opacity: 0; pointer-events: none; transition: opacity 0.3s;
+      overflow-y: auto;
+    }
+    .checkout-overlay.open { opacity: 1; pointer-events: all; }
+    .checkout-panel {
+      min-height: 100vh; display: flex; align-items: flex-start; justify-content: center;
+      padding: 80px 20px 40px;
+    }
+    .checkout-inner {
+      background: var(--black-card); border: 1px solid var(--black-border);
+      border-radius: var(--radius); width: 100%; max-width: 560px;
+      padding: 32px 28px; position: relative;
+    }
+    .checkout-close-btn {
+      position: absolute; top: 16px; right: 16px;
+      font-size: 1.2rem; color: var(--grey); cursor: pointer;
+      background: none; border: none; padding: 4px; transition: var(--transition);
+    }
+    .checkout-close-btn:hover { color: var(--white); }
+
+    /* SECTION EYEBROW & TITLE */
+    .s-eyebrow { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--orange); margin-bottom: 8px; }
+    .s-title { font-family: var(--font-display); font-size: clamp(2rem, 6vw, 4rem); margin-bottom: 12px; }
+    .s-title span { color: var(--orange); }
+    .s-subtitle { color: var(--grey-light); max-width: 520px; line-height: 1.8; margin-bottom: 0; }
+
+    /* Hero height: fallback vh + dvh para mobile browsers */
+    #hero { height: calc(100vh - 64px); height: calc(100dvh - 64px); }
+
+    /* ---- PARTNERS STRIP ---- */
+    .partners-strip { margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--black-border); }
+    .partners-strip-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--grey); margin-bottom: 20px; text-align: center; }
+    .partners-logos { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; align-items: center; }
+    .partner-logo-card {
+      background: var(--black-card); border: 1px solid var(--black-border);
+      border-radius: var(--radius); padding: 14px 22px;
+      display: flex; align-items: center; justify-content: center;
+      width: 130px; height: 72px; transition: var(--transition); cursor: default;
+    }
+    .partner-logo-card:hover { border-color: var(--orange); box-shadow: 0 4px 20px rgba(244,121,32,0.1); }
+    .partner-logo-card img {
+      max-width: 100%; max-height: 100%; object-fit: contain;
+      transition: var(--transition);
+    }
+    .partner-logo-card:hover img { transform: scale(1.06); }
+
+    /* ---- VIDEO LOCAL ---- */
+    .video-local-hero { margin-top: 32px; border-radius: var(--radius); overflow: hidden; background: #000; border: 1px solid var(--black-border); }
+    .video-local-hero video { width: 100%; display: block; max-height: 72vh; }
+    .video-local-hero-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--orange); margin-top: 10px; text-align: center; }
+    .video-clips-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 24px; }
+    @media(min-width:640px) { .video-clips-grid { grid-template-columns: repeat(4, 1fr); } }
+    .video-clip-card { border-radius: var(--radius-sm); overflow: hidden; background: #000; border: 1px solid var(--black-border); transition: var(--transition); }
+    .video-clip-card:hover { border-color: var(--orange); box-shadow: 0 4px 20px rgba(244,121,32,0.15); }
+    .video-clip-card video { width: 100%; display: block; }
+    .video-clip-title { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--grey); padding: 7px 10px; background: var(--black-card); text-align: center; }
+
+    /* ---- MAP LOCATION BADGE ---- */
+    .map-location-badge {
+      display: flex; align-items: center; gap: 12px;
+      background: var(--black-card); border: 1px solid var(--black-border);
+      border-radius: var(--radius); padding: 12px 16px;
+      margin-bottom: 12px;
+    }
+    .map-location-badge img { width: 36px; height: 36px; border-radius: 8px; flex-shrink: 0; object-fit: cover; }
+    .map-location-badge-text { flex: 1; }
+    .map-location-badge-name { font-family: var(--font-display); font-size: 1rem; letter-spacing: 0.04em; }
+    .map-location-badge-addr { font-size: 0.72rem; color: var(--grey); margin-top: 1px; }
+    .map-location-badge-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 8px var(--orange); flex-shrink: 0; animation: pulse-dot 2s ease-in-out infinite; }
+    @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
+
+    /* ---- FOOTER OVERRIDE ---- */
+    .footer { background: #0a0a0a; border-top: none; }
+    .footer-fire-bar { height: 2px; background: linear-gradient(90deg, transparent 0%, var(--orange) 30%, var(--red) 50%, var(--orange) 70%, transparent 100%); }
+    .footer-inner { max-width: 1100px; margin: 0 auto; padding: 48px 24px 32px; display: flex; flex-direction: column; gap: 40px; }
+    @media(min-width:768px) { .footer-inner { flex-direction: row; gap: 60px; align-items: flex-start; } }
+    .footer-brand { flex: 1.4; }
+    .footer-logo-row { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .footer-logo-img { width: 42px; height: 42px; border-radius: 10px; flex-shrink: 0; }
+    .footer-logo-text { font-family: var(--font-display); font-size: 1.25rem; letter-spacing: 0.05em; line-height: 1.1; }
+    .footer-logo-text span { color: var(--orange); }
+    .footer-logo-sub { font-size: 0.6rem; color: var(--grey); letter-spacing: 0.18em; text-transform: uppercase; }
+    .footer-tagline { font-family: var(--font-display); font-size: clamp(1.6rem,4vw,2.2rem); color: rgba(255,255,255,0.12); letter-spacing: 0.04em; line-height: 1.15; margin: 20px 0; }
+    .footer-tagline strong { color: rgba(255,255,255,0.55); }
+    .footer-social { display: flex; gap: 10px; margin-top: 4px; }
+    .footer-social a {
+      width: 38px; height: 38px;
+      background: var(--black-card); border: 1px solid var(--black-border);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      color: var(--grey); transition: var(--transition);
+    }
+    .footer-social a:hover { border-color: var(--orange); color: var(--orange); background: rgba(244,121,32,0.08); }
+    .footer-links { display: flex; gap: 48px; flex-shrink: 0; }
+    .footer-col h4 { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--orange); font-weight: 700; margin-bottom: 14px; }
+    .footer-col a { display: block; color: var(--grey); font-size: 0.82rem; margin-bottom: 10px; transition: var(--transition); }
+    .footer-col a:hover { color: var(--white); padding-left: 6px; }
+    .footer-bottom { border-top: 1px solid var(--black-border); padding: 18px 24px; text-align: center; max-width: 1100px; margin: 0 auto; width: 100%; }
+    .footer-bottom p { font-size: 0.72rem; color: var(--grey); letter-spacing: 0.05em; }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-logo" onclick="scrollToSection('hero')" style="cursor:pointer">
+      <img src="/images/logocdp.jpg" alt="Club del Picante" style="height:34px;width:34px;border-radius:8px;flex-shrink:0;"/>
+      <span class="logo-text">CLUB DEL <strong>PICANTE</strong></span>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-login-btn" id="navLoginBtn" onclick="openLoginModal()" aria-label="Iniciar sesión">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span id="navLoginText">Ingresar</span>
+      </button>
+      <button class="nav-cart-btn" onclick="openCart()" aria-label="Carrito">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="cart-badge" id="cartBadge">0</span>
+      </button>
+      <button class="nav-menu-btn" onclick="toggleMobileMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
+      <button class="mobile-menu-close" onclick="toggleMobileMenu()">✕</button>
+      <nav class="mobile-nav-links">
+        <a href="#" onclick="scrollToSection('hero'); toggleMobileMenu()">Inicio</a>
+        <a href="#" onclick="scrollToSection('productos'); toggleMobileMenu()">Productos</a>
+        <a href="#" onclick="scrollToSection('collabs'); toggleMobileMenu()">Collabs</a>
+        <a href="#" onclick="scrollToSection('galeria'); toggleMobileMenu()">Galería</a>
+        <a href="#" onclick="scrollToSection('puntos-venta'); toggleMobileMenu()">Puntos de venta</a>
+        <a href="#" onclick="scrollToSection('contacto'); toggleMobileMenu()">Contacto</a>
+      </nav>
+      <div class="mobile-menu-footer"><p>El fuego en cada gota 🔥</p></div>
+    </div>
+  </div>
+
+  <main id="app">
+
+    <!-- =================== 1. HERO =================== -->
+    <section id="hero" style="position:relative;overflow:hidden;z-index:5;">
+
+      <!-- Foto full bleed -->
+      <img src="/images/DSC00423.jpg" alt="Hot Honey Club del Picante"
+        style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 25%;z-index:0;"/>
+
+      <!-- Overlay: claro arriba, negro sólido abajo -->
+      <div style="position:absolute;inset:0;z-index:1;background:linear-gradient(to bottom,rgba(10,10,10,0.1) 0%,rgba(10,10,10,0) 30%,rgba(10,10,10,0.7) 60%,rgba(10,10,10,1) 100%);"></div>
+
+      <div id="particles" style="position:absolute;inset:0;pointer-events:none;z-index:2;"></div>
+
+      <!-- Contenido anclado al fondo -->
+      <div style="position:absolute;bottom:0;left:0;right:0;z-index:3;padding:0 24px 32px;">
+
+        <h1 style="font-family:var(--font-display);font-size:clamp(4.4rem,21vw,8rem);line-height:0.87;margin-bottom:4px;">
+          HOT<br/>
+          <span style="color:var(--orange);">HONEY</span>
+        </h1>
+
+        <p style="font-family:var(--font-display);font-size:clamp(1.1rem,5vw,1.8rem);letter-spacing:0.12em;color:rgba(255,255,255,0.6);margin-bottom:22px;">
+          CLUB DEL PICANTE
+        </p>
+
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <button class="btn-primary" onclick="scrollToSection('productos')"
+            style="width:100%;justify-content:center;display:flex;padding:15px 24px;">
+            Comprar ahora →
+          </button>
+          <button class="btn-ghost" onclick="scrollToSection('collabs')"
+            style="width:100%;justify-content:center;display:flex;padding:13px 24px;">
+            Ver collabs
+          </button>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =================== 3. PRODUCTOS =================== -->
+    <section id="productos" class="products-scroll-section">
+      <div class="inner">
+        <p class="s-eyebrow">Lo que hacemos</p>
+        <h2 class="s-title">NUESTROS <span>PRODUCTOS</span></h2>
+        <p class="s-subtitle">Hot Honey artesanal en distintas presentaciones. Todos con peperoncino seleccionado, sin conservantes.</p>
+        <div class="products-scroll-grid" id="productsScrollGrid"></div>
+      </div>
+    </section>
+
+    <!-- =================== 4. COLLABS =================== -->
+    <section id="collabs" class="collabs-scroll-section">
+      <div class="inner">
+        <p class="s-eyebrow">Con los mejores del barrio</p>
+        <h2 class="s-title">NUESTRAS <span>COLLABS</span></h2>
+        <p class="s-subtitle">Tocá cada foto para ver el post original en Instagram.</p>
+        <div class="collabs-ig-grid">
+
+          <a class="colab-ig-card" href="https://www.instagram.com/p/DWpetZzmkz7/" target="_blank" rel="noopener">
+            <img src="/images/colab-angus.jpg" alt="Angus Brother"/>
+            <div class="colab-ig-ig-icon">
+              <svg viewBox="0 0 24 24" fill="white" width="15" height="15"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </div>
+            <div class="colab-ig-overlay">
+              <div class="colab-ig-handle">@angus.brother · @manosquepan</div>
+              <div class="colab-ig-name">BURGER ESPECIAL ABRIL</div>
+              <div class="colab-ig-arrow">Ver en Instagram →</div>
+            </div>
+            <div class="colab-ig-tag">Hamburguesa</div>
+          </a>
+
+          <a class="colab-ig-card" href="https://www.instagram.com/p/DWH7iobld_b/" target="_blank" rel="noopener">
+            <img src="/images/colab-pizza.jpg" alt="Sweet Spicy Pepperoni"/>
+            <div class="colab-ig-ig-icon">
+              <svg viewBox="0 0 24 24" fill="white" width="15" height="15"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </div>
+            <div class="colab-ig-overlay">
+              <div class="colab-ig-handle">@tarasconoficial</div>
+              <div class="colab-ig-name">SWEET SPICY PEPPERONI</div>
+              <div class="colab-ig-arrow">Ver en Instagram →</div>
+            </div>
+            <div class="colab-ig-tag">Pizza</div>
+          </a>
+
+          <a class="colab-ig-card" href="https://www.instagram.com/reel/DWKVAhXjOq_/" target="_blank" rel="noopener">
+            <img src="/images/colab-sandwich.jpg" alt="Fusión Ardiente Tarascón"/>
+            <div class="colab-ig-ig-icon">
+              <svg viewBox="0 0 24 24" fill="white" width="15" height="15"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </div>
+            <div class="colab-ig-overlay">
+              <div class="colab-ig-handle">@tarasconoficial</div>
+              <div class="colab-ig-name">THE SOPRANO SANDWICH</div>
+              <div class="colab-ig-arrow">Ver en Instagram →</div>
+            </div>
+            <div class="colab-ig-tag">Sandwich</div>
+          </a>
+
+        </div>
+
+        <!-- Partners strip -->
+        <div class="partners-strip">
+          <p class="partners-strip-label">También trabajamos con</p>
+          <div class="partners-logos">
+            <div class="partner-logo-card">
+              <img src="/images/unnamed.jpg" alt="Angus Brother"/>
+            </div>
+            <div class="partner-logo-card">
+              <img src="/images/enburger.png" alt="Enri's"/>
+            </div>
+            <div class="partner-logo-card">
+              <img src="/images/CABULI.png" alt="Cabuli Catering"/>
+            </div>
+            <div class="partner-logo-card">
+              <img src="/images/TAYTAY.png" alt="Tay Tay Empanadas"/>
+            </div>
+            <div class="partner-logo-card">
+              <img src="/images/unnamed.png" alt="Canillita"/>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align:center;margin-top:32px">
+          <p style="font-size:0.8rem;color:var(--grey);margin-bottom:12px">¿Querés hacer una colab con nosotros?</p>
+          <button class="btn-primary" onclick="scrollToSection('contacto')">Escribinos →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== 5. GALERÍA =================== -->
+    <section id="galeria" class="gallery-scroll-section">
+      <div class="inner">
+        <p class="s-eyebrow">En acción</p>
+        <h2 class="s-title">LA <span>GALERÍA</span></h2>
+        <p class="s-subtitle">Burgers, pizzas, sushi — el Hot Honey en todos lados.</p>
+        <div class="gallery-mosaic">
+          <div class="gm-item gm-1" onclick="openLightbox('/images/DSC00550.jpg')">
+            <img src="/images/DSC00550.jpg" alt="Hot Honey + Hamburguesa"/>
+          </div>
+          <div class="gm-item gm-2" onclick="openLightbox('/images/DSC00423.jpg')">
+            <img src="/images/DSC00423.jpg" alt="Chef aplicando Hot Honey"/>
+          </div>
+          <div class="gm-item gm-3" onclick="openLightbox('/images/DSC00583.jpg')">
+            <img src="/images/DSC00583.jpg" alt="Hamburguesa con Hot Honey close-up"/>
+          </div>
+          <div class="gm-item gm-4" onclick="openLightbox('/images/colab-angus.jpg')">
+            <img src="/images/colab-angus.jpg" alt="Colab Angus Brother"/>
+          </div>
+          <div class="gm-item gm-5" onclick="openLightbox('/images/DSC00581.jpg')">
+            <img src="/images/DSC00581.jpg" alt="Mesa con hamburguesas y Hot Honey"/>
+          </div>
+          <div class="gm-item gm-6" onclick="openLightbox('/images/colab-sandwich.jpg')">
+            <img src="/images/colab-sandwich.jpg" alt="The Soprano Sandwich — Tarascón"/>
+          </div>
+          <div class="gm-item gm-7" onclick="openLightbox('/images/colab-pizza.jpg')">
+            <img src="/images/colab-pizza.jpg" alt="Sweet Spicy Pepperoni — Tarascón"/>
+          </div>
+        </div>
+      </div>
+      <!-- Lightbox -->
+      <div class="gallery-lightbox" id="lightbox" onclick="closeLightbox()">
+        <button class="gallery-lightbox-close" onclick="closeLightbox()">✕</button>
+        <img id="lightboxImg" src="" alt=""/>
+      </div>
+    </section>
+
+    <!-- =================== 6. VIDEO =================== -->
+    <section id="video" class="video-scroll-section">
+      <div class="inner">
+        <p class="s-eyebrow">En movimiento</p>
+        <h2 class="s-title">NUESTROS <span>VIDEOS</span></h2>
+        <p class="s-subtitle">El Club del Picante en acción — reels, collabs y fuego en cada cuadro.</p>
+
+        <!-- Video principal — próximamente en YouTube -->
+        <div class="video-coming-soon">
+          <div class="video-coming-icon">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <div class="video-coming-title">VIDEOS <span>PRÓXIMAMENTE</span></div>
+          <p class="video-coming-sub">Nuestros reels y collabs van a estar disponibles muy pronto. Seguinos en Instagram para no perderte ninguno.</p>
+          <a class="video-coming-yt" href="https://instagram.com/cdpicante" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="white" width="16" height="16"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            Seguir en Instagram
+          </a>
+        </div>
+
+        <!-- Clips — placeholders -->
+        <div class="video-clips-grid" style="margin-top:16px;">
+          <div class="video-clip-placeholder"><div class="video-clip-ph-icon">▶</div><div class="video-clip-title">Versión corta</div></div>
+          <div class="video-clip-placeholder"><div class="video-clip-ph-icon">▶</div><div class="video-clip-title">Pollo</div></div>
+          <div class="video-clip-placeholder"><div class="video-clip-ph-icon">▶</div><div class="video-clip-title">Clip 1</div></div>
+          <div class="video-clip-placeholder"><div class="video-clip-ph-icon">▶</div><div class="video-clip-title">Clip 2</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== 7. PUNTOS DE VENTA / MAPA =================== -->
+    <section id="puntos-venta" class="map-scroll-section">
+      <div class="inner">
+        <p class="s-eyebrow">Encontranos</p>
+        <h2 class="s-title">PUNTOS DE <span>VENTA</span></h2>
+        <p class="s-subtitle">Encontrá nuestra Hot Honey en estos locales o pedila directo por la web.</p>
+        <div class="map-layout">
+          <div class="map-points">
+            <div class="map-point-card active" onclick="switchMap('coqueta', this)">
+              <div class="map-point-icon">🥩</div>
+              <div class="map-point-name">COQUETA</div>
+              <div class="map-point-address">3 de Febrero 3089, Nuñez, CABA</div>
+              <div class="map-point-hours">Mar–Sáb 10:30–20:30 · Dom 10–14hs</div>
+            </div>
+            <div class="map-point-card" onclick="switchMap('eneldo', this)">
+              <div class="map-point-icon">🌿</div>
+              <div class="map-point-name">ENELDO</div>
+              <div class="map-point-address">Mercado Puertos de Lagos, Escobar</div>
+              <div class="map-point-hours">Todos los días 9:30–20hs</div>
+            </div>
+            <div class="map-point-card" onclick="switchMap('online', this)">
+              <div class="map-point-icon">🚚</div>
+              <div class="map-point-name">ENVÍO A DOMICILIO</div>
+              <div class="map-point-address">CABA y GBA</div>
+              <div class="map-point-hours">Pedí por la web · 24–72hs hábiles</div>
+            </div>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;">
+            <div class="map-location-badge" id="mapBadge">
+              <img src="/images/logocdp.jpg" alt="Club del Picante"/>
+              <div class="map-location-badge-text">
+                <div class="map-location-badge-name">CLUB DEL PICANTE</div>
+                <div class="map-location-badge-addr" id="mapBadgeAddr">3 de Febrero 3089, Nuñez, CABA</div>
+              </div>
+              <div class="map-location-badge-dot"></div>
+            </div>
+            <div class="map-container" id="mapContainer" style="flex:1;">
+              <iframe id="mapFrame"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3285.0!2d-58.4628!3d-34.5534!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2s3+de+Febrero+3089%2C+Nu%C3%B1ez%2C+Buenos+Aires!5e0!3m2!1ses!2sar!4v1"
+                allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                style="width:100%;height:100%;min-height:340px;border:0">
+              </iframe>
+            </div>
+          </div>
+        </div>
+        <p style="text-align:center;margin-top:20px;font-size:0.75rem;color:var(--grey)">📍 Las coordenadas exactas se actualizan cuando nos pasás los datos</p>
+      </div>
+    </section>
+
+    <!-- =================== 8. CONTACTO =================== -->
+    <section id="contacto" class="contact-scroll-section">
+      <div class="inner">
+        <p class="s-eyebrow">Hablemos</p>
+        <h2 class="s-title">CONTACTO</h2>
+        <div class="contact-scroll-grid">
+          <div style="display:flex;flex-direction:column;gap:14px;flex:1">
+            <div class="contact-card">
+              <span class="contact-icon">📱</span>
+              <h3>WhatsApp</h3>
+              <p>La forma más rápida. Respondemos en el día.</p>
+              <a href="https://wa.me/5491100000000?text=Hola!%20Quiero%20info%20sobre%20Club%20del%20Picante" class="btn-whatsapp" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="currentColor" style="width:20px;height:20px"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Escribinos por WhatsApp
+              </a>
+            </div>
+            <div class="contact-card">
+              <span class="contact-icon">📸</span>
+              <h3>Instagram</h3>
+              <p>Recetas, collabs y lanzamientos.</p>
+              <a href="https://instagram.com/cdpicante" target="_blank" rel="noopener" class="btn-instagram">@cdpicante</a>
+            </div>
+          </div>
+          <div style="flex:1">
+            <div class="contact-card" style="height:100%">
+              <h3 style="margin-bottom:20px;font-size:1.3rem">Mandanos un <span style="color:var(--orange)">mensaje</span></h3>
+              <form onsubmit="submitContact(event)" style="display:flex;flex-direction:column;gap:14px">
+                <div class="form-group">
+                  <label>Nombre</label>
+                  <input type="text" id="contactName" placeholder="Tu nombre" required/>
+                </div>
+                <div class="form-group">
+                  <label>Email</label>
+                  <input type="email" id="contactEmail" placeholder="tu@email.com" required/>
+                </div>
+                <div class="form-group">
+                  <label>Asunto</label>
+                  <select id="contactSubject">
+                    <option value="consulta">Consulta general</option>
+                    <option value="mayorista">Venta mayorista</option>
+                    <option value="colab">Propuesta de colab</option>
+                    <option value="pedido">Consulta sobre pedido</option>
+                    <option value="otro">Otro</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Mensaje</label>
+                  <textarea id="contactMsg" rows="3" placeholder="Contanos..." required></textarea>
+                </div>
+                <button type="submit" class="btn-primary" style="width:100%;justify-content:center;display:flex"><span>Enviar mensaje</span></button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer" id="mainFooter">
+    <div class="footer-fire-bar"></div>
+    <div class="footer-inner">
+
+      <div class="footer-brand">
+        <div class="footer-logo-row">
+          <img src="/images/logocdp.jpg" alt="Club del Picante" class="footer-logo-img"/>
+          <div>
+            <div class="footer-logo-text">CLUB DEL <span>PICANTE</span></div>
+            <div class="footer-logo-sub">Hot Honey Artesanal</div>
+          </div>
+        </div>
+        <div class="footer-tagline">EL FUEGO<br/><strong>EN CADA GOTA.</strong></div>
+        <div class="footer-social">
+          <a href="https://instagram.com/cdpicante" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="https://wa.me/5491100000000" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Navegación</h4>
+          <a href="#" onclick="scrollToSection('productos')">Productos</a>
+          <a href="#" onclick="scrollToSection('collabs')">Collabs</a>
+          <a href="#" onclick="scrollToSection('galeria')">Galería</a>
+          <a href="#" onclick="scrollToSection('puntos-venta')">Puntos de venta</a>
+          <a href="#" onclick="scrollToSection('contacto')">Contacto</a>
+        </div>
+        <div class="footer-col">
+          <h4>Info</h4>
+          <a href="#" onclick="scrollToSection('contacto')">Mayorista</a>
+          <a href="#" onclick="scrollToSection('contacto')">Propuesta colab</a>
+          <a href="#" onclick="openLoginModal()">Mi cuenta</a>
+        </div>
+      </div>
+
+    </div>
+    <div class="footer-bottom"><p>© 2025 Club del Picante · Hecho con 🔥 en Buenos Aires</p></div>
+  </footer>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <!-- LOADING -->
+  <div class="loading-overlay" id="loadingOverlay"><div class="loading-spinner">🌶️</div></div>
+
+  <!-- CART OVERLAY -->
+  <div class="cart-overlay" id="cartOverlay" onclick="closeCartIfOutside(event)">
+    <div class="cart-panel">
+      <div class="cart-panel-header">
+        <h2>TU <span style="color:var(--orange)">CARRITO</span></h2>
+        <button class="cart-panel-close" onclick="closeCart()">✕</button>
+      </div>
+      <div class="cart-panel-body" id="cartPanelBody"></div>
+      <div class="cart-panel-footer" id="cartPanelFooter"></div>
+    </div>
+  </div>
+
+  <!-- CHECKOUT OVERLAY -->
+  <div class="checkout-overlay" id="checkoutOverlay">
+    <div class="checkout-panel">
+      <div class="checkout-inner" id="checkoutInner"></div>
+    </div>
+  </div>
+
+  <!-- LOGIN MODAL -->
+  <div class="login-modal-overlay" id="loginModalOverlay" onclick="closeLoginModal(event)">
+    <div class="login-modal" id="loginModal">
+      <button class="login-modal-close" onclick="closeLoginModal()">✕</button>
+      <div class="login-tabs">
+        <button class="login-tab active" id="tabLogin" onclick="switchAuthTab('login')">Iniciar sesión</button>
+        <button class="login-tab" id="tabRegister" onclick="switchAuthTab('register')">Registrarse</button>
+      </div>
+      <div id="authLogin">
+        <div class="login-modal-header"><span>🌶️</span><h2>Bienvenido</h2><p>Ingresá a tu cuenta</p></div>
+        <form onsubmit="submitLogin(event)">
+          <div class="form-group"><label>Email</label><input type="email" id="loginEmail" placeholder="tu@email.com" required/></div>
+          <div class="form-group"><label>Contrasena</label><input type="password" id="loginPassword" placeholder="..." required/></div>
+          <button type="submit" class="btn-primary btn-full" style="margin-top:8px"><span>Ingresar</span></button>
+        </form>
+        <p class="auth-switch-text">No tenes cuenta? <a href="#" onclick="switchAuthTab('register')">Registrate</a></p>
+      </div>
+      <div id="authRegister" style="display:none">
+        <div class="login-modal-header"><span>🔥</span><h2>Crear cuenta</h2><p>Unite al Club del Picante</p></div>
+        <form onsubmit="submitRegister(event)">
+          <div class="form-group"><label>Nombre</label><input type="text" id="regName" placeholder="Tu nombre" required/></div>
+          <div class="form-group"><label>Email</label><input type="email" id="regEmail" placeholder="tu@email.com" required/></div>
+          <div class="form-group"><label>Contrasena</label><input type="password" id="regPassword" placeholder="Minimo 6 caracteres" minlength="6" required/></div>
+          <button type="submit" class="btn-primary btn-full" style="margin-top:8px"><span>Crear cuenta</span></button>
+        </form>
+        <p class="auth-switch-text">Ya tenes cuenta? <a href="#" onclick="switchAuthTab('login')">Iniciá sesion</a></p>
+      </div>
+      <div id="authLogged" style="display:none">
+        <div class="login-modal-header"><span>👋</span><h2 id="loggedName">Hola!</h2><p id="loggedEmail" style="color:var(--grey);font-size:0.85rem"></p></div>
+        <div class="logged-actions">
+          <button class="logged-action-btn" onclick="closeLoginModal(); scrollToSection('productos')"><span>🛒</span> Ver productos</button>
+          <button class="logged-action-btn" onclick="closeLoginModal(); openCart()"><span>📦</span> Mi carrito</button>
+          <button class="logged-action-btn" id="btnAdminPanel" style="display:none" onclick="closeLoginModal(); loadAdminPanel()"><span>⚙️</span> Panel Admin</button>
+        </div>
+        <button class="btn-ghost btn-full" style="margin-top:16px" onclick="logoutUser()">Cerrar sesion</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/cart.js"></script>
+  <script src="/js/products.js"></script>
+  <script src="/js/checkout.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>
